@@ -114,7 +114,7 @@ final class StatusBarController {
                 object: nil,
                 queue: .main
             ) { [weak self] _ in
-                self?.shortcutsDidChange()
+                MainActor.assumeIsolated { self?.shortcutsDidChange() }
             }
         )
 
@@ -125,7 +125,7 @@ final class StatusBarController {
                 object: nil,
                 queue: .main
             ) { [weak self] _ in
-                self?.settingsDidChange()
+                MainActor.assumeIsolated { self?.settingsDidChange() }
             }
         )
 
@@ -137,7 +137,7 @@ final class StatusBarController {
                 queue: .main
             ) { [weak self] notification in
                 guard let provider = notification.object as? ASRProvider else { return }
-                self?.providerDidChange(provider)
+                MainActor.assumeIsolated { self?.providerDidChange(provider) }
             }
         )
 
@@ -148,7 +148,7 @@ final class StatusBarController {
                 object: nil,
                 queue: .main
             ) { [weak self] _ in
-                self?.permissionsDidChange()
+                MainActor.assumeIsolated { self?.permissionsDidChange() }
             }
         )
 
@@ -160,7 +160,7 @@ final class StatusBarController {
                 queue: .main
             ) { [weak self] notification in
                 guard let state = notification.object as? ParakeetModelDownloader.State else { return }
-                self?.handleParakeetDownloadState(state)
+                MainActor.assumeIsolated { self?.handleParakeetDownloadState(state) }
             }
         )
 
